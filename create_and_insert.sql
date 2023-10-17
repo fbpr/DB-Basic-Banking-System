@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   transaction_type transaction_type NOT NULL,
   amount BIGINT NOT NULL,
   description VARCHAR(255),
-  createdAt TIMESTAMP NOT NULL DEFAULT NOW(),
+  createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- DML 
@@ -68,19 +68,19 @@ VALUES (5, 500000);
 
 -- INSERT TRANSACTIONS TABLE
 INSERT INTO transactions (account_id, transaction_type, amount, description) 
-VALUES (1, 'deposit', 100000, "salary");
+VALUES (1, 'deposit', 100000, 'salary');
 
 INSERT INTO transactions (account_id, transaction_type, amount, description)
-VALUES (2, 'withdraw', 50000, "foods");
+VALUES (2, 'withdraw', 50000, 'foods');
 
 INSERT INTO transactions (account_id, transaction_type, amount, description) 
-VALUES (3, 'deposit', 150000, "salary");
+VALUES (3, 'deposit', 150000, 'salary');
 
 INSERT INTO transactions (account_id, transaction_type, amount, description) 
-VALUES (4, 'withdraw', 100000, "drinks");
+VALUES (4, 'withdraw', 100000, 'drinks');
 
 INSERT INTO transactions (account_id, transaction_type, amount, description) 
-VALUES (5, 'deposit', 500000, "bonus");
+VALUES (5, 'deposit', 500000, 'bonus');
 
 -- READ ALL DATA FROM ALL TABLES
 SELECT * FROM customers;
@@ -137,15 +137,14 @@ END;
 $$;
 
 -- RUN PROCEDURE
-CALL add_customer('Trevor Tran', 'Solo', 'trevor.tran@gmail.com' '62134546565');
+CALL add_customer('Trevor Tran', 'Solo', 'trevor.tran@gmail.com', '62134546565');
 CALL create_account(2, 350000);
-
 
 -- CTE RECENT DEPOSITS FOR A WEEK
 WITH recent_deposits AS (
-  SELECT id, account_id
+  SELECT id, account_id, amount
   FROM transactions
   WHERE transaction_type = 'deposit'
-  AND createdAt >= CURRENT_DATE - INTERVAL 1 WEEK
+  AND createdAt >= CURRENT_DATE - INTERVAL '1 WEEK'
 )
 SELECT * FROM recent_deposits;
